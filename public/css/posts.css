@@ -1,0 +1,58 @@
+.posts_comb {
+    margin-top: 3%;
+}
+.posts_header{
+  background: url(../images/gray_background.png) no-repeat;
+  background-size: 100%;
+  height: 200px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+.posts_header h1 {
+  align-self: center;
+  font-size: 3em;
+  font-weight: 500;
+}
+.posts_read_more {
+  font-size: 10px;
+  margin-top: 2%;
+  background-color: #f4b03b;
+  color: white;
+  font-weight: bold;
+  border: 1px solid #e6970f;
+  float: right;
+  outline: none;
+  cursor: pointer;
+}
+.posts_each_cont_inner{
+  margin-left: 5%;
+  margin-top: 3%;
+  box-shadow: 10px 10px 20px #888888;
+}
+.posts_image{
+  width: 100%;
+  padding-top: 2%;
+}
+.posts_link{
+  cursor: pointer;
+  color: #606666;
+  padding-top: 4%;
+}
+.posts_description{
+  white-space: nowrap; 
+  width: 93%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.postinfobot{
+  border-top: 1px solid #f4b03b;
+  padding: 10px;
+  font-size: 0.9vw;
+  box-shadow: 10px 5px 20px #888888;
+}
+.likeblock i{
+  color: #9da6aa;
+  font-size: 18px;
+  margin: 0 12px;
+}
