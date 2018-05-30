@@ -7,7 +7,6 @@ $( document ).ready(function() {
 	      data: {postId : postId},
 	      dataType: "json",
 	      success: result => {
-	      	console.log(result[0]);
 			getPost(result[0]);
 	      }
 	    });
@@ -25,6 +24,7 @@ $( document ).ready(function() {
 	      dataType: "json",
 	      success: result => {
 	      	$('.posts_each_cont_inner').find().attr('data-id' , postId).remove();
+	      	document.location.reload();
 	      }
 	    });
 	}
@@ -87,7 +87,8 @@ $( document ).ready(function() {
 	      data: ajax_data,
 	      dataType: "json",
 	      success: result => {
-			showNewPost(item);
+			showNewPost(result.item);
+			$('#addPostModal').modal('toggle');
 	      }
 	    });
 	}
@@ -112,7 +113,7 @@ $( document ).ready(function() {
 			<div class='col-12 col-sm-12 col-md-4 col-lg-3 col-xl-3 posts_each_cont_inner' data-id="`+ item.id +`">
                 <div class='row post backgraund-content'>
                     <div class='col-12'>
-                        <img class='posts_image' src="/images/{{ $post->img }}" alt='img'>
+                        <img class='posts_image' src="/images/`+ item.img +`" alt='img'>
                     </div>
                     <div class='col-12 description_part'>
                         <h5 data-id='' class="posts_link"><a>`+ item.title +`</a></h5>
@@ -135,7 +136,7 @@ $( document ).ready(function() {
                 </div>
             </div>
 		`;
-		$('.posts_each_cont').html(newPost);
+		$('.posts_each_cont').append(newPost);
 
 	}
 

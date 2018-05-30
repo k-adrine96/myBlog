@@ -38,6 +38,7 @@ class HomeController extends Controller
         } else {
             $posts = Posts::where('user_id', Auth::Id())->get();
         }
-        return view('home', ['posts'=>$posts, 'check'=>Auth::check()]);
+        return view('home', ['posts'=>$posts, 
+                             'check'=>Auth::check()]);
     }
 }

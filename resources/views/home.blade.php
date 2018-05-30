@@ -15,6 +15,7 @@
             <div class="clearfix"></div>
           <div class="items">
             <div class='row posts_each_cont'>
+                @if(!$posts->isEmpty())
                  @foreach($posts as $post)
                     <div class='col-12 col-sm-12 col-md-4 col-lg-3 col-xl-3 posts_each_cont_inner' data-id="{{ $post->id }}">
                         <div class='row post backgraund-content'>
@@ -52,7 +53,7 @@
                         </div>
                     </div>
                 @endforeach
-
+            @endif
             </div>
           </div>
           <div class="row backgraund-content comments-content"></div>
@@ -64,23 +65,22 @@
     </div>
   </div>
 </div>
-
 <div id="viewPostModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
     <div class="modal-content">
         <div class='col-10 offset-1'>
-            <img class='posts_image' src="/images/{{ $post->img }}" alt='img'>
+            <img class='posts_image' src="" alt='img'>
         </div>
         <div class="modal-header">
-            <h4 class="modal-title">{{ $post->title }}</h4>
+            <h4 class="modal-title"></h4>
         </div>
         <div class="modal-body">
-            <p class="modal-description">{{ $post->description }}</p>
+            <p class="modal-description"></p>
         </div>
         <div class="modal-footer">
-            <p class="modal-created-at">Created at : {{ $post->created_at }}</p>
+            <p class="modal-created-at">Created at : </p>
         </div>
     </div>
   </div>
