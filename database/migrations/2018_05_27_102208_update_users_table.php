@@ -18,10 +18,10 @@ class UpdateUsersTable extends Migration
                 $table->string('lastname')->after('name');
             }
             if (!Schema::hasColumn('users', 'phone')) {
-               $table->integer('phone')->after('email');
+               $table->string('phone')->after('email');
             }
-            if (!Schema::hasColumn('users', 'last_active')) {
-                $table->dateTime('last_active')->after('remember_token');
+            if (!Schema::hasColumn('users', 'is_admin')) {
+               $table->integer('is_admin')->after('phone')->default(0);
             }
         });
     }
@@ -34,7 +34,7 @@ class UpdateUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['lastname', 'phone', 'last_active']);
+            $table->dropColumn(['lastname', 'phone', 'is_admin']);
         });
     }
 }

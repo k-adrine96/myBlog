@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Posts;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+
 
 class HomeController extends Controller
 {
@@ -23,6 +27,17 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $posts = Posts::where('status', 1)->get();
+        return view('home', ['posts'=>$posts, 'check'=>Auth::check()]);
+    }
+
+    public function userGet()
+    {
+        if (Auth::user()->is_admin) {
+            $posts = Posts::all();
+        } else {
+            $posts = Posts::where('user_id', Auth::Id())->get();
+        }
+        return view('home', ['posts'=>$posts, 'check'=>Auth::check()]);
     }
 }

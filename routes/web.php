@@ -11,10 +11,17 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+// Route::get('/', function () {
+//     return view('home');
+// })->name('home');
 
 Auth::routes();
 
-// Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('/userHome', 'HomeController@userGet')->name('userHome');
+
+//START POSTS PART
+Route::get('posts/getPost', 'PostsController@getPost');
+Route::post('posts/deletePost', 'PostsController@deletePost');
+Route::post('posts/updatePost', 'PostsController@updatePost');
+//END POSTS PART

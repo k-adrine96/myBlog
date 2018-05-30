@@ -1,49 +1,104 @@
-function posts(){
-  this.__init.call(this);
-}
-posts.prototype = {
-	__init: function(){
-		this.generatePostItems();
-  },
-  generatePostItems: function(data, filters) {
-    this.posts = data.data;
-    var posts  = '';
-    data.data.forEach((item, i) => {
-      var mydate = new Date(item.created_at);
-      var date = mydate.toDateString();
-      var str = (String(mydate).split(" ")[4]);
-      var index = str.lastIndexOf(":");
-      var time = str.substring(0, index);
-      date = date.replace(String(mydate).split(" ")[0], getMonthWeekdays(String(mydate).split(" ")[0])+',');
-      date = date.replace(String(mydate).split(" ")[1], getMonthWeekdays(String(mydate).split(" ")[1]));
-      posts += `
-        <div class='col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 posts_each_cont_inner'>
-          <div class='row post backgraund-content'>
-            <div class='col-12'>
-              <img class='posts_image' src='/images/1.jpg' alt='img'>
-            </div>
-            <div class='col-12'>
-              <h5 data-id='`+item.id+`' class="posts_link"><a>`+item.title+`</a></h5>
-              <p class='posts_description'>`+item.description+`</p>
-            </div>
-            <div class='col-12'>
-              <div class='comment_num'>
-                <a data-toggle='tooltip' data-placement='bottom' title='comment' class="comcount">
-                  <div>`+item.comments_counts+`</div>
-                  <div class='icon'></div>
-                </a>
-                <div><button type='button' class='btn posts_read_more' data-id='`+item.id+`'>ԱՎԵԼԻՆ</button></div>
-              </div>
-            </div>
-          </div>
-          <div class='row postinfobot backgraund-content'>
-            <div class='col-12 likeblock pull-left'>
-              <i class='pull-left fa fa-clock-o'></i> <div class='pull-left'>Տեղադրվել Է : `+date+` @ `+time+`</div>
-            </div>
-          </div>
-        </div>`;
-    });
-    posts+= '<script type="text/javascript" src="/share42/share42.js"></script>';
-    $(".content > .items > .posts_each_cont").html(posts);
-  },
-};
+$( document ).ready(function() {
+
+	function viewPost(postId){
+		$.ajax({
+	      url: 'posts/getPost',
+	      type: "get",
+	      data: {postId : postId},
+	      dataType: "json",
+	      success: result => {
+			getPost(result[0]);
+	      }
+	    });
+		$('#viewPostModal').modal().show();
+	}
+
+	function deletePost(postId){
+		$.ajax({
+		  headers: {
+		    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		  },
+	      url: 'posts/deletePost',
+	      type: "post",
+	      data: {postId : postId},
+	      dataType: "json",
+	      success: result => {
+	      	$('.posts_each_cont_inner').find().attr('data-id' , postId).remove();
+	      }
+	    });
+	}
+
+	function updatePost(postId){
+		$.ajax({
+		  headers: {
+		    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		  },
+	      url: 'posts/updatePost',
+	      type: "post",
+	      data: {postId : postId},
+	      dataType: "json",
+	      success: result => {
+	      	var newTitle = $('.title').val();
+			var newDescription = $('.description').val();
+			var post_data = new FormData();
+			$('.title').val(newTitle);
+			$('.description').val(newDescription);
+			post_data.append('title' , newTitle);
+			post_data.append('description' , newDescription);
+			$('#editPostModal').modal('toggle');
+	      }
+	    });
+	}
+
+	function editPost(postId){
+		$.ajax({
+	      url: 'posts/getPost',
+	      type: "get",
+	      data: {postId : postId},
+	      dataType: "json",
+	      success: result => {
+			$('#editPostModal').modal().show();
+			$('.title').val(result[0].title);
+			$('.description').val(result[0].description);
+	      }
+	    });
+	}
+
+	function getPost(post){
+		var title = post.title;
+		var description = post.description;
+		var created_at = post.created_at;
+		var img = post.img;
+		$('.modal-title').html(title);
+		$('.modal-description').html(description);
+		$('.modal-created-at').html(created_at);
+		$('.posts_image').attr('src', 'images/' +img);
+	}
+
+
+	// function editPost(post){
+	// 	var newTitle = $('.title').val();
+	// 	var newDescription = $('.description').val();
+	// }
+
+	$(document).off('click', '.add_posts').on('click', '.add_posts', function() {
+		addPost();
+	});
+	$(document).off('click', '.posts_edit').on('click', '.posts_edit', function() {
+		var postId = $(this).closest('.posts_each_cont_inner').attr('data-id');
+		editPost(postId);
+	});
+	$(document).off('click', '.posts_save').on('click', '.posts_save', function() {
+		var postId = $(this).closest('.posts_each_cont_inner').attr('data-id');
+		updatePost(postId);
+	});
+	$(document).off('click', '.posts_delete').on('click', '.posts_delete', function() {
+		var postId = $(this).closest('.posts_each_cont_inner').attr('data-id');
+		confirm('You are about to delete the post. Are you sure?');
+		deletePost(postId);
+	});
+	$(document).off('click', '.post_view').on('click', '.post_view', function() {
+		var postId = $(this).closest('.posts_each_cont_inner').attr('data-id');
+		viewPost(postId);
+	});
+});
