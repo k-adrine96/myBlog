@@ -24,4 +24,5 @@ Route::get('/userHome', 'HomeController@userGet')->name('userHome');
 Route::get('posts/getPost', 'PostsController@getPost');
 Route::post('posts/deletePost', 'PostsController@deletePost');
 Route::post('posts/updatePost', 'PostsController@updatePost');
+Route::post('posts/createPost', 'PostsController@createPost');
 //END POSTS PART

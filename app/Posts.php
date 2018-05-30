@@ -12,11 +12,13 @@ class Posts extends Model
     public $timestamps    = TRUE;
 
     protected $fillable   = [
+        'id',
         'user_id',
         'title', 
     	'description',
     	'img',
-    	'status'
+    	'status',
+        'created_at',
     ];
 
 

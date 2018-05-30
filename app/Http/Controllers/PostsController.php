@@ -39,7 +39,7 @@ class PostsController extends Controller
             'title'       => 'required',
             'description' => 'required',
             'status'      => 'required',
-            'img'         => 'required',
+            // 'img'         => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -47,20 +47,17 @@ class PostsController extends Controller
                 'errors' => $validator->errors()
             ];
         }
+        $postData      = $request->all();
+       // $img      = $this->fileUpload($request);
 
-        $postData = $request->all();
-        $img      = $this->fileUpload($request);
-
-        $postData['img']     = $img;
+       // $postData['img']     = $img;
         $postData['user_id'] = Auth::id();
-        
-        dump($postData);   //esi tox mna vor stuges 
-
+        $postData['img']     = 'img1.png';
         $posts               = Posts::create($postData);
 
         return [
-            'status' => true,
-            'item'    => $posts
+            'status'   => true,
+            'item'     => $posts
         ];
     }
 
@@ -84,11 +81,9 @@ class PostsController extends Controller
         //     $postData['img'] = $img;
         // }
 
-        // $id = $postData['id'];
-        $id = $request->post('postId');
-        unset($postData['_token']);
+        $id = $postData['id'];
+        // unset($postData['_token']);
         unset($postData['id']);
-        $postData['user_id'] = \Auth::id();
         $post = Posts::where('id', $id)->update($postData);
 
         return [
@@ -102,26 +97,26 @@ class PostsController extends Controller
         return Posts::where('id' , $id)->delete();
     }
 
-    private function fileUpload(Request $request)
-    {
-        $validator = \Validator::make($request->all(), [
-            'img' => 'required|image|mimes:jpeg,png,jpg,gif'
-        ]);
+    // private function fileUpload(Request $request)
+    // {
+    //     $validator = \Validator::make($request->all(), [
+    //         'img' => 'required|image|mimes:jpeg,png,jpg,gif'
+    //     ]);
 
-        if ($validator->fails()) {
-            return [
-                'errors' => $validator->errors()
-            ];
-        }
+    //     if ($validator->fails()) {
+    //         return [
+    //             'errors' => $validator->errors()
+    //         ];
+    //     }
 
-        $images = $request->file('img');
+    //     $images = $request->file('img');
 
-        $imageName = uniqid(time()) . '.' . $images->getClientOriginalExtension();
+    //     $imageName = uniqid(time()) . '.' . $images->getClientOriginalExtension();
 
-        $destinationPath = public_path('images/');
+    //     $destinationPath = public_path('images/');
 
-        $images->move($destinationPath, $imageName);
+    //     $images->move($destinationPath, $imageName);
 
-        return $imageName;
-    }
+    //     return $imageName;
+    // }
 }

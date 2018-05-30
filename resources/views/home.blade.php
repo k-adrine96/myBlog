@@ -97,12 +97,34 @@
         <div class='modal-body col-10 offset-1'>
             Desc: <input class="description" type="text" value=""> 
         </div>
-<!--         <div class="modal-body col-10 offset-1">
-            Public: <input type="radio" name="type">
-            Private: <input type="radio" name="type">
-        </div> -->
         <div class="modal-footer">
-            <button type='button' class='btn posts_read_more posts_save'>Save</button>
+            <button type='button' class='btn posts_read_more edit_posts_save'>Save</button>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div id="addPostModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+<!--         <div class='modal-body col-10 offset-1'>
+            Image: <input class="addNewImage" name="myFile" type="file"> 
+        </div> -->
+        <div class='modal-body col-10 offset-1'>
+            Title: <input class="title" type="text" value=""> 
+        </div>
+        <div class='modal-body col-10 offset-1'>
+            Desc: <input class="description" type="text" value=""> 
+        </div>
+        <div class="modal-body col-10 offset-1">
+            Public: <input class="radioButton" type="radio" name="type" data-value="Public">
+            <br>
+            Private: <input class="radioButton" type="radio" name="type" data-value="Private">
+        </div>
+        <div class="modal-footer">
+            <button type='button' class='btn posts_read_more create_posts_save'>Save</button>
         </div>
     </div>
   </div>
