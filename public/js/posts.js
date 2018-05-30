@@ -75,12 +75,6 @@ $( document ).ready(function() {
 		$('.posts_image').attr('src', 'images/' +img);
 	}
 
-
-	// function editPost(post){
-	// 	var newTitle = $('.title').val();
-	// 	var newDescription = $('.description').val();
-	// }
-
 	$(document).off('click', '.add_posts').on('click', '.add_posts', function() {
 		addPost();
 	});
